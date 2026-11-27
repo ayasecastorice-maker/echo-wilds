@@ -1,0 +1,73 @@
+:root{
+  color-scheme:dark;--bg:#101b17;--panel:#1d2b24;--ink:#eae6d1;--muted:#a7b7a5;--line:#485448;
+  --gold:#dfbc73;--paper:#eae5cc;--paper-ink:#263c32;--rule:#b7b79e;
+  font-family:"DM Sans","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:radial-gradient(ellipse at 0 0,#25382c 0,transparent 45%),var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible,canvas:focus-visible{outline:2px solid #ffd98a;outline-offset:3px}
+button{touch-action:manipulation}button:active{transform:translateY(1px)}[hidden]{display:none!important}
+#game-shell{width:min(100%,1590px);margin:auto;padding:0 clamp(16px,3.4vw,56px) 18px}
+.mast{display:flex;align-items:center;justify-content:space-between;height:82px}
+.brand{display:flex;align-items:center;gap:13px}.brandmark{width:40px;height:46px;color:#eac37d}
+.brand div{display:flex;align-items:baseline;gap:13px}.brand strong{font:800 32px/1 "Noto Serif SC","Songti SC",SimSun,serif;letter-spacing:.1em}
+.brand span{font:500 11px/1 "Space Mono",Consolas,monospace;letter-spacing:.22em;color:#c5bd98}
+nav{display:flex;gap:9px;align-items:center}.tool{height:35px;background:transparent;border:1px solid #526054;border-radius:5px;display:inline-flex;gap:7px;align-items:center;justify-content:center;padding:0 11px;font-size:12px;color:#d9e1cf}
+#workshop{border-color:#827953;color:#ead4a0}#workshop[aria-pressed=true]{background:#d9c587;color:#29392a}
+.tool:hover,.camp:hover{filter:brightness(1.16)}.tool canvas{width:17px;height:17px}.tool.square{width:35px;padding:0}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) clamp(243px,19.2vw,302px);gap:18px;align-items:stretch}
+.world-column{min-width:0;display:flex;flex-direction:column}.map-wrap{position:relative;isolation:isolate;border:1px solid #767e60;overflow:hidden;background:#233c31;box-shadow:0 10px 24px #08120d45;aspect-ratio:3/2}
+#world{width:100%;height:100%;position:absolute;display:block;inset:0;touch-action:none;cursor:crosshair;outline-offset:-4px}
+.map-wrap.walk #world{cursor:default}
+.place,.compass,.notice{position:absolute;pointer-events:none}.place{top:0;left:0;padding:clamp(18px,2vw,34px) 40px 43px clamp(18px,2.3vw,36px);color:#fff6df;background:radial-gradient(ellipse at 20% 16%,#102a22b5 5%,#162a2275 45%,transparent 73%);text-shadow:0 2px 9px #0c2019}
+.place span{display:flex;align-items:center;gap:7px;font-size:clamp(10px,.85vw,13px);letter-spacing:.17em;color:#fff0c4}
+.place i,.small-label i{display:inline-block;width:6px;height:6px;transform:rotate(45deg);background:#f2ce83}
+.place h1{font:750 clamp(27px,3.4vw,54px)/1.25 "Noto Serif SC","Songti SC",SimSun,serif;margin:7px 0 0;letter-spacing:.045em}
+.compass{right:18px;top:17px;text-align:center;color:#fff3ce;text-shadow:0 1px 6px #092319;filter:drop-shadow(0 2px 2px #1a261e)}
+.compass canvas{display:block;width:30px;height:33px}.compass span{font:11px Georgia,serif}
+#zoom{position:absolute;right:18px;top:78px;background:#17291ee8;border:1px solid #c0c4a083;color:#fff6d8;border-radius:4px;width:29px;height:29px;padding:0;font-size:18px}
+.map-bottom{position:absolute;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.map-bottom>*,.map-bottom button{pointer-events:auto}.pointer-tools,#interact{display:inline-flex;border:1px solid #d7d6ac65;background:#122219ed;border-radius:5px;box-shadow:0 2px 9px #13291f70;padding:3px;gap:1px}
+.pointer-tools button,#interact{font-size:12px}.pointer-tools button{background:transparent;padding:6px 9px;color:#d8dec5;border:0;border-radius:3px;display:flex;align-items:center;gap:5px}
+.pointer-tools canvas{height:15px;width:15px}.pointer-tools button[aria-pressed=true]{background:#e5dfbd;color:#253a2a}
+#interact{align-items:center;padding:6px 10px;gap:6px;color:#ffebb6;border-color:#dac485}
+.notice{bottom:64px;left:50%;transform:translate(-50%,5px);border-radius:4px;padding:8px 14px;color:#fff6d8;background:#14271eee;box-shadow:0 2px 9px #14211670;text-align:center;max-width:90%;width:max-content;font-size:13px;opacity:0;transition:opacity .18s,transform .18s}.notice.show{opacity:1;transform:translate(-50%,0)}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:#f4e7b5;background:#243b32}
+.kit{margin-top:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 21px;border:1px solid #435347;background:linear-gradient(110deg,#223328,#1a2721);padding:15px 17px 13px;border-radius:4px}
+.section-label{font-size:11px;font-weight:650;letter-spacing:.08em;color:#bfc7ad;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.runes,.forms{display:flex;gap:7px}.rune{--accent:#a4e1dc;min-width:0;flex:1;padding:6px 9px;display:flex;align-items:center;gap:8px;color:#d5ddce;border:1px solid #536353;border-radius:3px;background:#18261e;box-shadow:inset 0 1px #ffffff05}
+.rune.wind{--accent:#c8dc91}.rune.echo{--accent:#e8bb77}.rune canvas{width:33px;height:33px;color:var(--accent)}.rune span{white-space:nowrap;font:700 17px/1.4 "Noto Serif SC",SimSun,serif}
+.rune kbd{margin-left:auto}.rune[aria-pressed=true]{background:#33483c;border-color:var(--accent);color:#f8f3d8;box-shadow:inset 0 -2px var(--accent)}
+kbd{font:11px/1.1 Consolas,monospace;color:inherit;border:1px solid currentColor;border-radius:3px;padding:1px 4px;opacity:.73;white-space:nowrap}
+.kit-form{border-left:1px solid #506052;padding-left:18px}.forms{gap:0;border:1px solid #566654;border-radius:3px;overflow:hidden}
+.forms button{border:0;background:#17251d;color:#b5bdad;font-size:13px;padding:0 12px;height:45px}.forms button[aria-pressed=true]{background:#dbd5b6;color:#283c2b;font-weight:700}
+#spell-hint{grid-column:1/-1;margin:0;color:#bfccb8;font-size:12px;line-height:1.5}
+.journal{color-scheme:light;color:var(--paper-ink);position:relative;isolation:isolate;display:flex;flex-direction:column;padding:22px 21px 16px;border-radius:4px;border:1px solid #a8ac8c;
+  background:repeating-linear-gradient(111deg,#9e906507 0 1px,transparent 1px 5px),radial-gradient(ellipse at 95% 95%,#d9d4b8,transparent 65%),#ebe7d0}
+.journal-head{display:flex;align-items:center;gap:9px;padding-bottom:16px;border-bottom:2px solid #54634b}.journal-head canvas{width:24px;height:26px;color:#50664b}
+.journal-head h2,.journal-label h3{margin:0}.journal-head h2{font:750 25px/1.3 "Noto Serif SC",SimSun,serif;letter-spacing:.035em}
+.quest,.relic-block,.routes{padding:clamp(14px,1.6vw,25px) 0;border-bottom:1px solid var(--rule)}
+.small-label{display:flex;align-items:center;gap:6px;font-size:11px;color:#506348;letter-spacing:.08em}.small-label i{width:5px;height:5px;background:#778853}
+.quest h3{font:780 clamp(18px,1.5vw,25px)/1.45 "Noto Serif SC",SimSun,serif;margin:8px 0 6px}
+.quest p,.routes p{font-size:13px;line-height:1.85;color:#53614d;margin:0}.clue{display:flex;align-items:center;gap:9px;margin-top:9px;color:#3d543b;border:0;border-bottom:1px dotted #7a856d;padding:0 0 2px;background:none;font-size:12px}
+#clue-text{border-left:2px solid #8f986d;margin:8px 0 0;padding-left:9px;color:#42563d;font-size:12px}
+.journal-label{display:flex;justify-content:space-between;align-items:baseline}.journal-label h3{font:700 17px/1.4 "Noto Serif SC",SimSun,serif}.journal-label>span{font:12px Consolas,monospace;letter-spacing:.06em;color:#5a6950}
+.relic-list{display:grid;gap:8px;margin-top:12px}.relic-row{display:flex;align-items:center;gap:8px;font-size:13px;color:#57624e}
+.relic-row canvas{width:24px;height:24px;color:#757b5d}.relic-row .dot{margin-left:auto;width:7px;height:7px;border:1px solid #8a9375;transform:rotate(45deg)}.relic-row.found{font-weight:650;color:#254f36}.relic-row.found .dot{background:#607f4f}
+.route-marks{display:flex;gap:10px;margin:12px 0 7px}.route-marks canvas{border:1px dashed #a4aa8b;width:38px;height:38px;padding:6px;border-radius:50%;color:#929a81}.route-marks .found{border:1px solid #526749;background:#5f744e;color:#fff2c0}
+.routes p{font-size:12px}.routes{border-bottom:0}.camp{display:flex;align-items:center;gap:9px;width:100%;margin-top:auto;padding:10px 0 2px;border:0;border-top:1px solid var(--rule);background:none;color:#3f543d;text-align:left;font-size:13px}
+.camp canvas{width:19px;height:19px}.camp span{margin-left:auto;font-size:21px}
+footer{display:flex;justify-content:space-between;gap:15px;align-items:center;color:#9cad9c;font-size:11px;margin-top:14px}.keys{display:flex;gap:15px;flex-wrap:wrap}.keys kbd{font-size:10px}#save-state{font-size:11px}
+dialog{width:min(430px,calc(100% - 30px));color:#263d2f;background:#eae5cc;border:1px solid #8b9779;border-radius:6px;padding:21px 23px;box-shadow:0 20px 100px #0008}
+dialog::backdrop{background:#0a1712b3}.dialog-head,.dialog-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}.dialog-head h2{margin:0;font:750 25px "Noto Serif SC",SimSun,serif}.dialog-head button{padding:0 6px;font-size:24px;border:0;background:none}dialog p,dialog dd{font-size:13px;line-height:1.7}
+dialog dt{font-weight:bold;margin:9px 0 1px}dialog dd{margin:0;color:#52634e}.dialog-actions button{border:1px solid #87947d;background:none;border-radius:4px;padding:7px 11px;color:#38533d}.dialog-actions .primary{background:#344e39;color:#f0e8c8}.reset-hint{margin:8px 0 0;color:#8a482c}
+:fullscreen{background:var(--bg);overflow:auto}
+@media(min-width:1100px) and (max-height:790px){#game-shell{max-width:min(100%,calc((100vh - 150px)*1.65 + 300px))}.mast{height:65px}.kit{padding:10px 14px}.journal{padding:16px 18px}.quest,.relic-block,.routes{padding:12px 0}.journal-head{padding-bottom:10px}footer{margin-top:9px}}
+@media(max-width:1070px){.layout{grid-template-columns:minmax(0,1fr) 218px;gap:12px}#game-shell{padding:0 15px 15px}.journal{padding:16px 14px}.quest,.relic-block,.routes{padding:13px 0}.kit{gap:7px 11px;padding:11px 12px}.kit-form{padding-left:10px}.rune{padding:5px 7px;gap:4px}.rune canvas{width:28px;height:28px}.forms button{height:38px;padding:0 9px}}
+@media(max-width:790px){#game-shell{padding:0 10px 15px}.mast{height:60px}.brand div{gap:8px}.brandmark{width:28px;height:34px}.brand{gap:7px}.brand strong{font-size:26px}.brand span{font-size:9px}.layout{display:flex;flex-direction:column;gap:12px}
+.journal{display:grid;grid-template-columns:1.2fr 1fr;gap:0 16px}.journal-head{grid-column:1/-1;padding-bottom:9px}.journal-head h2{font-size:20px}.quest,.relic-block{border-bottom:1px solid var(--rule)}.camp{align-self:end;margin:0;padding:8px 0 3px}.routes{padding-bottom:0}.place{padding:13px 18px 21px}.place h1{font-size:29px}.place span{font-size:10px}.map-bottom{bottom:7px;left:7px;right:7px}.compass{top:9px;right:9px}.compass canvas{width:20px;height:26px}.notice{bottom:45px;font-size:12px;padding:6px 9px}.kit{margin-top:7px}.tool.square{display:none}footer .keys{display:none}footer{justify-content:flex-end}}
+@media(max-width:480px){.brand div{display:block}.brand span{display:block;margin-top:2px;font-size:8px}.tool{height:32px;padding:0 7px;font-size:11px}nav{gap:5px}.kit{grid-template-columns:1fr auto;padding:10px;gap:7px}.section-label{font-size:10px;margin-bottom:5px}.runes{gap:4px}.rune{padding:5px 3px;justify-content:center;gap:2px}.rune canvas{width:22px;height:25px}.rune span{font-size:14px}.rune kbd,.kit-form kbd{display:none}.kit-form{padding-left:6px}.forms button{font-size:12px;padding:0 6px;height:35px}
+.journal{gap:0 12px}.journal-head canvas{height:21px}.quest h3,.journal-label h3{font-size:16px}.quest p,.routes p{font-size:12px}.pointer-tools button{font-size:11px;padding:4px 6px}.place h1{font-size:24px}.place h1{margin-top:3px}#spell-hint{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.notice{transition:none}}
+@media(max-width:790px){#zoom{right:7px;top:52px;width:25px;height:25px;font-size:16px}}
+@media(min-width:1071px) and (min-height:620px){#game-shell{max-width:min(1590px,calc((100svh - 272px)*1.5 + clamp(243px,19.2vw,302px) + clamp(32px,6.8vw,112px) + 18px))}}
+@media(min-width:1071px) and (min-height:620px) and (max-height:790px){#game-shell{max-width:min(1590px,calc((100svh - 212px)*1.5 + clamp(243px,19.2vw,302px) + clamp(32px,6.8vw,112px) + 18px))}}

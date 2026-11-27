@@ -1,0 +1,12 @@
+# Generated release files
+/dist/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Desktop metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini

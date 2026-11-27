@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111c17">
+  <title>符野 · 风息遗庭</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="game-shell">
+  <header class="mast">
+    <div class="brand"><canvas class="brandmark" data-ink="brand" aria-hidden="true"></canvas><div><strong>符野</strong><span>ECHO WILDS</span></div></div>
+    <nav aria-label="游戏设置">
+      <button class="tool" id="workshop" type="button" aria-pressed="false" title="编排两个符文并分享配方"><canvas data-ink="weave" aria-hidden="true"></canvas><span>符文工坊</span></button>
+      <button class="tool" id="sound" type="button" aria-pressed="true"><canvas data-ink="sound" aria-hidden="true"></canvas><span>声音</span></button>
+      <button class="tool" id="help" type="button"><canvas data-ink="book" aria-hidden="true"></canvas><span>操作指南</span></button>
+      <button class="tool square" id="fullscreen" type="button" aria-label="切换全屏" title="切换全屏"><canvas data-ink="full" aria-hidden="true"></canvas></button>
+    </nav>
+  </header>
+  <div class="layout">
+    <section class="world-column" aria-label="遗迹与符文">
+      <div class="map-wrap" id="map-wrap">
+        <canvas id="world" tabindex="0" aria-label="风息遗庭地图。用方向键或 WASD 移动，按数字键选择符文，点击目标施法。"></canvas>
+        <div class="place"><span><i></i>雾溪谷地</span><h1>风息遗庭</h1></div>
+        <div class="compass" aria-hidden="true"><span>N</span><canvas data-ink="compass"></canvas></div>
+        <button id="zoom" type="button" aria-pressed="false" aria-label="放大地图" title="放大地图">＋</button>
+        <div class="map-bottom"><div class="pointer-tools" role="group" aria-label="点击地图的操作">
+          <button id="cast-mode" type="button" aria-pressed="true"><canvas data-ink="wand" aria-hidden="true"></canvas>施法</button>
+          <button id="walk-mode" type="button" aria-pressed="false"><canvas data-ink="walk" aria-hidden="true"></canvas>行走</button>
+        </div><button id="interact" type="button" hidden><kbd>E</kbd><span>互动</span></button></div>
+        <div id="notice" class="notice" role="status" aria-live="polite"></div>
+        <div id="loading" class="loading">正在展开地图…</div>
+      </div>
+      <div class="kit">
+        <div class="kit-main"><div class="section-label">随身符文</div>
+        <div class="runes" role="group" aria-label="选择符文">
+          <button type="button" class="rune frost" data-rune="frost" aria-pressed="true"><canvas data-ink="frost" aria-hidden="true"></canvas><span>凝霜</span><kbd>1</kbd></button>
+          <button type="button" class="rune wind" data-rune="wind" aria-pressed="false"><canvas data-ink="wind" aria-hidden="true"></canvas><span>引风</span><kbd>2</kbd></button>
+          <button type="button" class="rune echo" data-rune="echo" aria-pressed="false"><canvas data-ink="echo" aria-hidden="true"></canvas><span>回响</span><kbd>3</kbd></button>
+        </div></div>
+        <div class="kit-form"><div class="section-label">符文形态 <kbd>Q</kbd></div>
+          <div class="forms" role="group" aria-label="符文形态">
+            <button type="button" data-form="focus" aria-pressed="true">聚点</button><button type="button" data-form="trail" aria-pressed="false">连缀</button>
+          </div></div>
+        <p id="spell-hint"></p>
+      </div>
+    </section>
+    <aside class="journal" aria-label="冒险手记">
+      <div class="journal-head"><canvas data-ink="quill" aria-hidden="true"></canvas><h2>冒险手记</h2></div>
+      <div class="quest">
+        <span class="small-label" id="quest-state"><i></i>当前目标</span>
+        <h3 id="quest-title">让旧钟再次响起</h3>
+        <p id="quest-copy">隔着溪水，东岸的石台上悬着一口钟。你可以过河，也可以让声音先过去。</p>
+        <button id="clue" class="clue" type="button">查看线索 <span>＋</span></button>
+        <p id="clue-text" hidden></p>
+      </div>
+      <div class="relic-block"><div class="journal-label"><h3>散落的遗物</h3><span id="relic-count">0 / 3</span></div>
+        <div class="relic-list" id="relic-list"></div>
+      </div>
+      <div class="routes"><div class="journal-label"><h3>敲钟的方法</h3><span id="route-count">0 / 3</span></div>
+        <div class="route-marks" aria-label="已发现的解法">
+          <canvas data-route="frost" data-ink="frost" title="尚未发现"></canvas><canvas data-route="wind" data-ink="wind" title="尚未发现"></canvas><canvas data-route="echo" data-ink="echo" title="尚未发现"></canvas>
+        </div>
+        <p id="route-note">每发现一种解法，就在这里留下一枚印记。</p>
+      </div>
+      <button id="camp" class="camp" type="button"><canvas data-ink="camp" aria-hidden="true"></canvas>回到西岸<span>↶</span></button>
+    </aside>
+  </div>
+  <footer><div class="keys"><span><kbd>W A S D</kbd> / <kbd>↑ ↓ ← →</kbd> 移动</span><span>点地图施法</span><span>右键前往</span><span><kbd>E</kbd> 互动</span></div><span id="save-state" role="status">进度保存在此浏览器</span></footer>
+</main>
+<dialog id="guide"><div class="dialog-head"><h2>旅人指南</h2><button type="button" id="close-help" aria-label="关闭">×</button></div>
+  <p>你在溪流西边。点亮东岸的旧钟后，仍可以回来尝试其他走法。</p>
+  <dl><dt>行走</dt><dd>键盘 WASD 或方向键。也可以选地图左下的「行走」，点地面前往。电脑上右键同样可以移动。</dd>
+  <dt>施法</dt><dd>选择下方符文，切到「施法」，再点地图上的目标。数字 1、2、3 切换符文，Q 改变形态。</dd>
+  <dt>互动</dt><dd>靠近遗物或旧钟时，点地图右下的互动按钮，或按 E。</dd>
+  <dt>符文工坊</dt><dd>把两种术式按顺序装进同一个配方。装配后点地图，第二道符文会延时向同一目标施放。选回任一普通符文即可解除。</dd>
+  <dt>再试一次</dt><dd>「回到西岸」会保留遗物和解法印记。想从头开始，可以清除本机存档。</dd></dl>
+  <div class="dialog-actions"><button id="reset" type="button">清除本机存档</button><button id="resume" class="primary" type="button">回到遗庭</button></div>
+  <p id="reset-hint" class="reset-hint" hidden>再点一次即可清除本游戏的存档。</p>
+</dialog>
+<script src="terrain.js"></script><script src="core.js"></script><script src="renderer.js"></script>
+<script src="ink.js"></script><script src="sound.js"></script><script src="recipes.js"></script><script src="app.js"></script>
+</body>
+</html>
